@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com Validações</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
+        button { padding: 10px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Formulário de Cadastro</h1>
+    <form id="cadastroForm">
+        <div class="form-group">
+            <label for="nome">Nome Completo:</label>
+            <input type="text" id="nome" name="nome" 
+                   pattern="^[A-Z][a-z]+ [A-Z][a-z]+$"
+                   title="Nome e sobrenome com iniciais maiúsculas, sem números ou caracteres especiais" required>
+            <div class="error" id="nomeError">Formato inválido. Exemplo: Alan Turing</div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" 
+                   pattern="^[a-z]+@[a-z]+\.br$"
+                   title="E-mail com letras minúsculas, deve terminar com .br" required>
+            <div class="error" id="emailError">Formato inválido. Exemplo: usuario@dominio.br</div>
+        </div>
+
+        <div class="form-group">
+            <label for="senha">Senha (8 caracteres):</label>
+            <input type="senha" id="senha" name="senha" 
+                   pattern="Σ = {a, b, c, …, z}, Γ = {A, B, C,
+…, Z} e N = {0, 1, 2, …, 9}"
+                   title="8 caracteres alfanuméricos com pelo menos 1 letra maiúscula e 1 número" required>
+            <div class="error" id="senhaError">A senha deve ter 8 caracteres com pelo menos 1 maiúscula e 1 número</div>
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" 
+                   pattern="^\d{3}\.\d{3}\.\d{3}-\d{2}$"
+                   title="Formato: xxx.xxx.xxx-xx" required>
+            <div class="error" id="cpfError">Formato inválido. Use xxx.xxx.xxx-xx</div>
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone" 
+                   pattern="^(\(\d{2}\) 9\d{4}-\d{4}|\(\d{2}\) 9\d{8}|\d{2} 9\d{8})$"
+                   title="Formatos aceitos: (xx) 9xxxx-xxxx, (xx) 9xxxxxxxx, xx 9xxxxxxxx" required>
+            <div class="error" id="telefoneError">Formato inválido. Exemplos: (91) 99999-9999, 91 999999999</div>
+        </div>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+        document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpa mensagens de erro anteriores
+            document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
+            
+            // Validação adicional (opcional)
+            let isValid = true;
+            
+            // Verifica cada campo
+            const nome = document.getElementById('nome');
+            if (!nome.validity.valid) {
+                document.getElementById('nomeError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const email = document.getElementById('email');
+            if (!email.validity.valid) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const senha = document.getElementById('senha');
+            if (!senha.validity.valid) {
+                document.getElementById('senhaError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const cpf = document.getElementById('cpf');
+            if (!cpf.validity.valid) {
+                document.getElementById('cpfError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const telefone = document.getElementById('telefone');
+            if (!telefone.validity.valid) {
+                document.getElementById('telefoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('Formulário enviado com sucesso!');
+                // Aqui você pode adicionar o código para enviar o formulário
+            }
+        });
+    </script>
+</body>
+</html>
